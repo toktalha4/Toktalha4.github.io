@@ -18,8 +18,14 @@ if (sendWhatsapp) {
     const phone = document.getElementById('phoneInput')?.value?.trim() || '-';
     const note = document.getElementById('noteInput')?.value?.trim() || '-';
 
-    const message = `Merhaba, web sitesinden ulaşıyorum.%0AAd Soyad: ${encodeURIComponent(name)}%0ATelefon: ${encodeURIComponent(phone)}%0ANot: ${encodeURIComponent(note)}`;
-    const url = `https://wa.me/905000000000?text=${message}`;
+    const message = [
+      'Merhaba, web sitesinden ulaşıyorum.',
+      `Ad Soyad: ${name}`,
+      `Telefon: ${phone}`,
+      `Not: ${note}`
+    ].join('\n');
+
+    const url = `https://wa.me/905000000000?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   });
 }
