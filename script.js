@@ -1,5 +1,6 @@
 const menuBtn = document.getElementById('menuBtn');
 const mobileNav = document.getElementById('mobileNav');
+const siteHeader = document.querySelector('.site-header');
 
 if (menuBtn && mobileNav) {
   menuBtn.addEventListener('click', () => {
@@ -11,23 +12,30 @@ if (menuBtn && mobileNav) {
   });
 }
 
+window.addEventListener('scroll', () => {
+  if (!siteHeader) return;
+  siteHeader.classList.toggle('scrolled', window.scrollY > 12);
+});
+
 const sendWhatsapp = document.getElementById('sendWhatsapp');
 if (sendWhatsapp) {
   sendWhatsapp.addEventListener('click', () => {
     const name = document.getElementById('nameInput')?.value?.trim() || '-';
     const phone = document.getElementById('phoneInput')?.value?.trim() || '-';
     const service = document.getElementById('serviceInput')?.value?.trim() || '-';
+    const time = document.getElementById('timeInput')?.value?.trim() || '-';
     const note = document.getElementById('noteInput')?.value?.trim() || '-';
 
     const message = [
-      'Merhaba, web sitesinden premium randevu talebi bırakıyorum.',
+      'Merhaba, Hair Time Protez web sitesi üzerinden bilgi ve randevu talebi bırakıyorum.',
       `Ad Soyad: ${name}`,
       `Telefon: ${phone}`,
       `İlgilendiğim Hizmet: ${service}`,
+      `Ulaşım Zamanı: ${time}`,
       `Not: ${note}`
     ].join('\n');
 
-    const url = `https://wa.me/905000000000?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/905377072206?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   });
 }
@@ -46,4 +54,21 @@ if ('IntersectionObserver' in window && revealItems.length) {
   revealItems.forEach(item => observer.observe(item));
 } else {
   revealItems.forEach(item => item.classList.add('visible'));
+}
+
+const compareRange = document.getElementById('compareRange');
+const compareOverlay = document.getElementById('compareOverlay');
+const compareHandle = document.getElementById('compareHandle');
+
+function updateCompare(value) {
+  const safeValue = `${value}%`;
+  if (compareOverlay) compareOverlay.style.width = safeValue;
+  if (compareHandle) compareHandle.style.left = safeValue;
+}
+
+if (compareRange) {
+  updateCompare(compareRange.value);
+  compareRange.addEventListener('input', (event) => {
+    updateCompare(event.target.value);
+  });
 }
