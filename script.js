@@ -1,3 +1,10 @@
+const WHATSAPP_NUMBER = '905377072206';
+
+function openWhatsApp(message) {
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank');
+}
+
 const menuBtn = document.getElementById('menuBtn');
 const mobileNav = document.getElementById('mobileNav');
 const siteHeader = document.querySelector('.site-header');
@@ -15,6 +22,13 @@ if (menuBtn && mobileNav) {
 window.addEventListener('scroll', () => {
   if (!siteHeader) return;
   siteHeader.classList.toggle('scrolled', window.scrollY > 12);
+});
+
+document.querySelectorAll('.wa-trigger').forEach(button => {
+  button.addEventListener('click', () => {
+    const message = button.getAttribute('data-wa-message') || 'Merhaba, bilgi almak istiyorum.';
+    openWhatsApp(message);
+  });
 });
 
 const sendWhatsapp = document.getElementById('sendWhatsapp');
@@ -35,8 +49,7 @@ if (sendWhatsapp) {
       `Not: ${note}`
     ].join('\n');
 
-    const url = `https://wa.me/905377072206?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    openWhatsApp(message);
   });
 }
 
